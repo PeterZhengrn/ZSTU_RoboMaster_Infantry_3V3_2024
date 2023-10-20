@@ -49,6 +49,7 @@
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
 osThreadId shootTaskHandle;
+osThreadId insTaskHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -57,6 +58,7 @@ osThreadId shootTaskHandle;
 
 void default_task(void const * argument);
 void shoot_task(void const * argument);
+void ins_task(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -111,6 +113,10 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(shootTask, shoot_task, osPriorityNormal, 0, 128);
   shootTaskHandle = osThreadCreate(osThread(shootTask), NULL);
 
+  /* definition and creation of insTask */
+  osThreadDef(insTask, ins_task, osPriorityNormal, 0, 128);
+  insTaskHandle = osThreadCreate(osThread(insTask), NULL);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -151,6 +157,24 @@ __weak void shoot_task(void const * argument)
     osDelay(1);
   }
   /* USER CODE END shoot_task */
+}
+
+/* USER CODE BEGIN Header_ins_task */
+/**
+* @brief Function implementing the insTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_ins_task */
+__weak void ins_task(void const * argument)
+{
+  /* USER CODE BEGIN ins_task */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END ins_task */
 }
 
 /* Private application code --------------------------------------------------*/

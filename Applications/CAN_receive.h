@@ -4,7 +4,7 @@
   * @brief      there is CAN interrupt function  to receive motor data,
   *             and CAN send function to send motor current to control motor.
   *             这里是CAN中断接收函数，接收电机数据,CAN发送函数发送电机电流控制电机.
-  * @note       
+  * @note
   * @history
   *  Version    Date            Author          Modification
   *  V1.0.0     Dec-26-2018     RM              1. done
@@ -43,43 +43,46 @@ typedef enum
 
 typedef enum
 {
-    CAN1_MOTOR_ALL_ID = 0x200,//can1大疆减速电机所有ID
-    CAN1_GIMBAL_ALL_ID = 0x1FF, //can1大疆云台电机所有ID 
+    CAN1_MOTOR_ALL_ID = 0x200,  // can1大疆减速电机所有ID
+    CAN1_GIMBAL_ALL_ID = 0x1FF, // can1大疆云台电机所有ID
 
-    CAN1_FRIC_M1_ID = 0x201,//摩擦轮1电机ID
-    CAN1_FRIC_M2_ID = 0x202,//摩擦轮2电机ID
-    CAN1_TRIGGER_MOTOR_ID = 0x203,//拨弹电机ID
+    CAN1_FRIC_M1_ID = 0x201,       //摩擦轮1电机ID
+    CAN1_FRIC_M2_ID = 0x202,       //摩擦轮2电机ID
+    CAN1_TRIGGER_MOTOR_ID = 0x203, //拨弹电机ID
 
-    CAN1_YAW_MOTOR_ID = 0x205,//云台yaw电机ID
-    CAN1_PIT_MOTOR_ID = 0x206,//云台pitch电机ID
-    
+    CAN1_YAW_MOTOR_ID = 0x205, //云台yaw电机ID
+    CAN1_PIT_MOTOR_ID = 0x206, //云台pitch电机ID
+
 } can1_msg_id_e;
 
 typedef enum
 {
-    CAN2_CHASSIS_ALL_ID = 0x200,//大疆减速电机所有ID
-    CAN1_STEER_ALL_ID = 0x1FF, //大疆云台电机(舵)所有ID 
+    CAN2_CHASSIS_ALL_ID = 0x200, //大疆减速电机所有ID
+    CAN1_STEER_ALL_ID = 0x1FF,   //大疆云台电机(舵)所有ID
 
     CAN2_3508_M1_ID = 0x201,
     CAN2_3508_M2_ID = 0x202,
     CAN2_3508_M3_ID = 0x203,
     CAN2_3508_M4_ID = 0x204,
-    CAN2_STEER_M1_MOTOR_ID = 0x205,//转向电机M1
-    CAN2_STEER_M2_MOTOR_ID = 0x206,//转向电机M2
-    CAN2_STEER_M3_MOTOR_ID = 0x207,//转向电机M3
-    CAN2_STEER_M4_MOTOR_ID = 0x208,//转向电机M4
+    CAN2_STEER_M1_MOTOR_ID = 0x205, //转向电机M1
+    CAN2_STEER_M2_MOTOR_ID = 0x206, //转向电机M2
+    CAN2_STEER_M3_MOTOR_ID = 0x207, //转向电机M3
+    CAN2_STEER_M4_MOTOR_ID = 0x208, //转向电机M4
 } can2_msg_id_e;
 
-//rm motor data
+// rm motor data
 typedef struct
 {
     uint16_t ecd;
     int16_t speed_rpm;
     int16_t given_current;
     uint8_t temperate;
-    int16_t last_ecd;
+    uint16_t last_ecd;
+    uint16_t offset_angle; //拨弹电机
+    int32_t round_cnt;
+    int32_t total_angle;
+    uint8_t msg_cnt;
 } motor_measure_t;
-
 
 extern void CAN_cmd_gimbal(int16_t yaw, int16_t pitch, int16_t shoot, int16_t rev);
 extern void CAN_cmd_chassis_reset_ID(void);

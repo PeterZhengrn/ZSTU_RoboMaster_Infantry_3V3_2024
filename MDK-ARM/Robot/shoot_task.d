@@ -28,8 +28,11 @@ robot\shoot_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h
 robot\shoot_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h
 robot\shoot_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
 robot\shoot_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
+robot\shoot_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h
+robot\shoot_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h
 robot\shoot_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 robot\shoot_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
+robot\shoot_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 robot\shoot_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 robot\shoot_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 robot\shoot_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
@@ -37,7 +40,7 @@ robot\shoot_task.o: ../Bsp/struct_typedef.h
 robot\shoot_task.o: ..\Applications\CAN_receive.h
 robot\shoot_task.o: ..\Applications\remote_control.h
 robot\shoot_task.o: ../Bsp/bsp_rc.h
-robot\shoot_task.o: ..\Components\Controller\pid.h
+robot\shoot_task.o: ../Components/Controller/pid.h
 robot\shoot_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 robot\shoot_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 robot\shoot_task.o: ../Core/Inc/FreeRTOSConfig.h
@@ -52,4 +55,5 @@ robot\shoot_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 robot\shoot_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 robot\shoot_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 robot\shoot_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
+robot\shoot_task.o: ../Components/Algorithm/user_lib.h
 robot\shoot_task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

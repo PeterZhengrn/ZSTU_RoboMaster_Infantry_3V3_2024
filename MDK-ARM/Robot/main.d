@@ -27,8 +27,11 @@ robot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h
 robot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h
 robot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
 robot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
+robot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h
+robot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h
 robot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 robot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
+robot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 robot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 robot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 robot\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
@@ -48,6 +51,8 @@ robot\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 robot\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 robot\main.o: ../Core/Inc/can.h
 robot\main.o: ../Core/Inc/dma.h
+robot\main.o: ../Core/Inc/i2c.h
+robot\main.o: ../Core/Inc/spi.h
 robot\main.o: ../Core/Inc/tim.h
 robot\main.o: ../Core/Inc/usart.h
 robot\main.o: ../Core/Inc/gpio.h
