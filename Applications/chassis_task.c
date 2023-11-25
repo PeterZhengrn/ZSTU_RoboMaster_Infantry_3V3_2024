@@ -40,10 +40,10 @@ void chassis_task(void const * argument)
     /* Infinite loop */
     while(1)
     {
-        chassis_set_mode(&chassis_move);
-        chassis_mode_change_control_transit(&chassis_move);
+        chassis_set_mode(&chassis_move);/////
+        chassis_mode_change_control_transit(&chassis_move);/////
         chassis_feedback_update(&chassis_move);
-        chassis_control_vector_set(&chassis_move);
+        chassis_control_vector_set(&chassis_move);//////
         chassis_control_loop(&chassis_move);
         // osDelay(2);
         //œµÕ≥—” ±
