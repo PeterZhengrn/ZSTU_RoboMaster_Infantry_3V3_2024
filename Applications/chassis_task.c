@@ -557,6 +557,38 @@ static void chassis_vector_to_mecanum_wheel_speed(const fp32 vx_set, const fp32 
     wheel_speed[3] = -vx_set + vy_set + (-CHASSIS_WZ_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
 }
 /**
+  * @brief          四个舵轮速度是通过三个参数计算出来的
+  * @param[in]      vx_set: 纵向速度
+  * @param[in]      vy_set: 横向速度
+  * @param[in]      wz_set: 旋转速度
+  * @param[out]     wheel_speed: 四个舵轮速度
+  * @retval         none
+  */
+static void chassis_vector_to_Steer_wheel_speed(const fp32 vx_set, const fp32 vy_set, const fp32 wz_set, fp32 wheel_speed[4])
+{
+      fp32 wheel_rpm_ratio;
+    fp32 Radius=1;////2023/11/24这个参数需要变，后续调的时候要改，杭电没有定义,这个参数是舵轮到中心的距离
+    wheel_rpm_ratio = 1;//2023/11/24这个参数需要变，后续调的时候要改，杭电没有定义
+    int8_t drct=1;//决定驱动电机正反转//2023/11/24这个参数需要变，后续调的时候要改，就是改正负
+
+    wheel_speed[0] = sqrt(	pow(vy_set + wz_set * Radius * 0.707107f,2)
+                       +	pow(vx_set - wz_set * Radius * 0.707107f,2)
+                       ) * wheel_rpm_ratio;
+    wheel_speed[1] = sqrt(	pow(vy_set - wz_set * Radius * 0.707107f,2)
+                       +	pow(vx_set - wz_set * Radius * 0.707107f,2)
+                       ) * wheel_rpm_ratio;
+    wheel_speed[2] = sqrt(	pow(vy_set - wz_set * Radius * 0.707107f,2)
+                       +	pow(vx_set +wz_set * Radius * 0.707107f,2)
+                       ) * wheel_rpm_ratio;
+    wheel_speed[3] = sqrt(	pow(vy_set + wz_set * Radius * 0.707107f,2)
+                       +	pow(vx_set + wz_set * Radius * 0.707107f,2) 
+                       ) * wheel_rpm_ratio;
+	  
+    for(int i=0;i<4;i++)
+       wheel_speed[i] = drct * wheel_speed[i];
+}
+
+/**
   * @brief          control loop, according to control set-point, calculate motor current, 
   *                 motor current will be sentto motor
   * @param[out]     chassis_move_control_loop: "chassis_move" valiable point
@@ -575,10 +607,10 @@ static void chassis_control_loop(chassis_move_t *chassis_move_control_loop)
     uint8_t i = 0;
 
     //mecanum wheel speed calculation
-    //麦轮运动分解
-    chassis_vector_to_mecanum_wheel_speed(chassis_move_control_loop->vx_set,
-                                          chassis_move_control_loop->vy_set, chassis_move_control_loop->wz_set, wheel_speed);
-
+            //2023//11//24改为舵轮运动分解，调不出来可以改为麦轮，麦轮还在，就改一个函数名字就行
+        chassis_vector_to_Steer_wheel_speed(chassis_move_control_loop->vx_set,
+                                            chassis_move_control_loop->vy_set,
+                                            chassis_move_control_loop->wz_set, wheel_speed);
     if (chassis_move_control_loop->chassis_mode == CHASSIS_VECTOR_RAW)
     {
         for (i = 0; i < 4; i++)
@@ -592,6 +624,7 @@ static void chassis_control_loop(chassis_move_t *chassis_move_control_loop)
 
     //calculate the max speed in four wheels, limit the max speed
     //计算轮子控制最大速度，并限制其最大速度
+        //2023//11//24，舵轮可能得提速
     for (i = 0; i < 4; i++)
     {
         chassis_move_control_loop->motor_chassis[i].speed_set = wheel_speed[i];
