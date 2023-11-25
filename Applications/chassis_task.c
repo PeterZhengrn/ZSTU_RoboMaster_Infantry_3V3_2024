@@ -667,7 +667,7 @@ static void chassis_control_loop(chassis_move_t *chassis_move_control_loop)
             //set chassis motor current to zero
             CAN_cmd_chassis(0, 0, 0, 0);
             // //set steer motor current to zero
-            // CAN_cmd_steer(0, 0, 0, 0);
+             CAN_cmd_steer(0, 0, 0, 0);
         }
     }
     else
@@ -679,9 +679,9 @@ static void chassis_control_loop(chassis_move_t *chassis_move_control_loop)
                         chassis_move_control_loop->motor_chassis[2].give_current, 
                         chassis_move_control_loop->motor_chassis[3].give_current);
 
-        // CAN_cmd_steer(chassis_move_control_loop->motor_chassis[0].give_current, 
-        //               chassis_move_control_loop->motor_chassis[1].give_current,
-        //               chassis_move_control_loop->motor_chassis[2].give_current, 
-        //               chassis_move_control_loop->motor_chassis[3].give_current);
+        CAN_cmd_steer(chassis_move_control_loop->motor_chassis[0].give_current, 
+                        chassis_move_control_loop->motor_chassis[1].give_current,
+                        chassis_move_control_loop->motor_chassis[2].give_current, 
+                        chassis_move_control_loop->motor_chassis[3].give_current);
     }
 }
