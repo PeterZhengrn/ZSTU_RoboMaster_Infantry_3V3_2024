@@ -10,6 +10,20 @@
     "files": [],
     "folders": [
       {
+        "name": "::CMSIS",
+        "files": [],
+        "folders": []
+      },
+      {
+        "name": "Algorithm",
+        "files": [
+          {
+            "path": "../Components/Algorithm/user_lib.c"
+          }
+        ],
+        "folders": []
+      },
+      {
         "name": "Application",
         "files": [],
         "folders": [
@@ -74,6 +88,81 @@
             ]
           }
         ]
+      },
+      {
+        "name": "Applications",
+        "files": [
+          {
+            "path": "../Applications/remote_control.c"
+          },
+          {
+            "path": "../Applications/default_task.c"
+          },
+          {
+            "path": "../Applications/CAN_receive.c"
+          },
+          {
+            "path": "../Applications/shoot_task.c"
+          },
+          {
+            "path": "../Applications/ins_task.c"
+          },
+          {
+            "path": "../Applications/chassis_task.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "Bsp",
+        "files": [
+          {
+            "path": "../Bsp/bsp_buzzer.c"
+          },
+          {
+            "path": "../Bsp/bsp_can.c"
+          },
+          {
+            "path": "../Bsp/bsp_delay.c"
+          },
+          {
+            "path": "../Bsp/bsp_imu_pwm.c"
+          },
+          {
+            "path": "../Bsp/bsp_led.c"
+          },
+          {
+            "path": "../Bsp/bsp_rc.c"
+          },
+          {
+            "path": "../Bsp/bsp_servo_pwm.c"
+          },
+          {
+            "path": "../Bsp/bsp_spi.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "Controller",
+        "files": [
+          {
+            "path": "../Components/Controller/pid.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "Devices",
+        "files": [
+          {
+            "path": "../Components/Devices/BMI088driver.c"
+          },
+          {
+            "path": "../Components/Devices/BMI088Middleware.c"
+          }
+        ],
+        "folders": []
       },
       {
         "name": "Drivers",
@@ -157,60 +246,6 @@
         ]
       },
       {
-        "name": "Applications",
-        "files": [
-          {
-            "path": "../Applications/remote_control.c"
-          },
-          {
-            "path": "../Applications/default_task.c"
-          },
-          {
-            "path": "../Applications/CAN_receive.c"
-          },
-          {
-            "path": "../Applications/shoot_task.c"
-          },
-          {
-            "path": "../Applications/ins_task.c"
-          },
-          {
-            "path": "../Applications/chassis_task.c"
-          }
-        ],
-        "folders": []
-      },
-      {
-        "name": "Bsp",
-        "files": [
-          {
-            "path": "../Bsp/bsp_rc.c"
-          },
-          {
-            "path": "../Bsp/bsp_buzzer.c"
-          },
-          {
-            "path": "../Bsp/bsp_can.c"
-          },
-          {
-            "path": "../Bsp/bsp_servo_pwm.c"
-          },
-          {
-            "path": "../Bsp/bsp_delay.c"
-          },
-          {
-            "path": "../Bsp/bsp_imu_pwm.c"
-          },
-          {
-            "path": "../Bsp/bsp_led.c"
-          },
-          {
-            "path": "../Bsp/bsp_spi.c"
-          }
-        ],
-        "folders": []
-      },
-      {
         "name": "Middlewares",
         "files": [],
         "folders": [
@@ -251,41 +286,6 @@
             "folders": []
           }
         ]
-      },
-      {
-        "name": "Controller",
-        "files": [
-          {
-            "path": "../Components/Controller/pid.c"
-          }
-        ],
-        "folders": []
-      },
-      {
-        "name": "Algorithm",
-        "files": [
-          {
-            "path": "../Components/Algorithm/user_lib.c"
-          }
-        ],
-        "folders": []
-      },
-      {
-        "name": "Devices",
-        "files": [
-          {
-            "path": "../Components/Devices/BMI088driver.c"
-          },
-          {
-            "path": "../Components/Devices/BMI088Middleware.c"
-          }
-        ],
-        "folders": []
-      },
-      {
-        "name": "::CMSIS",
-        "files": [],
-        "folders": []
       }
     ]
   },
