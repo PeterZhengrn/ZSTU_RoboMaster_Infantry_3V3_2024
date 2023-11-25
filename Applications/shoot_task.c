@@ -19,6 +19,8 @@ static void shoot_init(void)
 {
 	shoot_control.shoot_mode = SHOOT_STOP;
 	shoot_control.shoot_last_mode = SHOOT_STOP;
+	//机器人主指针
+	shoot_control.robot = get_robot_point();
 	//遥控器指针
 	shoot_control.shoot_rc = get_remote_control_point();
 	//电机指针
@@ -211,6 +213,10 @@ static void shoot_set_mode(void)
 	// {
 	//     shoot_control.shoot_mode = SHOOT_STOP;
 	// }
+	if(shoot_control.robot->main_mode==ROBOT_ZERO_FORCE)
+	{
+		shoot_control.shoot_mode = SHOOT_STOP;
+	}
 	last_s = shoot_control.shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL];
 }
 /**
@@ -396,11 +402,7 @@ void shoot_task(void const *argument)
 		shoot_set_mode();
 		shoot_feedback_update();
 		shoot_control_loop();
-		// CAN_cmd_shoot(shoot_control.fric1_given_current, shoot_control.fric2_given_current, shoot_control.given_current,0);
 		CAN_cmd_shoot(shoot_control.fric1_given_current, shoot_control.fric2_given_current, shoot_control.given_current, 0);
-		// CAN_cmd_shoot(0, 0, shoot_control.given_current,0);
-		// CAN_cmd_shoot(-FRIC_SPEED, FRIC_SPEED, shoot_control.given_current,0);
-		// CAN_cmd_shoot(0,0,0,0);
 		vTaskDelay(SHOOT_CONTROL_TIME);
 	}
 	/* USER CODE END */

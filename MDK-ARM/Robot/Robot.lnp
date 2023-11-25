@@ -1,5 +1,6 @@
 --cpu=Cortex-M4.fp.sp
 "robot\startup_stm32f407xx.o"
+"..\Drivers\CMSIS\Lib\ARM\arm_cortexM4lf_math.lib"
 "robot\main.o"
 "robot\gpio.o"
 "robot\freertos.o"
@@ -37,6 +38,8 @@
 "robot\default_task.o"
 "robot\can_receive.o"
 "robot\shoot_task.o"
+"robot\ins_task.o"
+"robot\chassis_task.o"
 "robot\bsp_rc.o"
 "robot\bsp_buzzer.o"
 "robot\bsp_can.o"
@@ -57,6 +60,8 @@
 "robot\port.o"
 "robot\pid.o"
 "robot\user_lib.o"
+"robot\bmi088driver.o"
+"robot\bmi088middleware.o"
 --strict --scatter "Robot\Robot.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

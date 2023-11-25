@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+extern void INS_task(void );
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -50,6 +50,7 @@
 osThreadId defaultTaskHandle;
 osThreadId shootTaskHandle;
 osThreadId insTaskHandle;
+osThreadId chassisTaskHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -59,6 +60,7 @@ osThreadId insTaskHandle;
 void default_task(void const * argument);
 void shoot_task(void const * argument);
 void ins_task(void const * argument);
+void chassis_task(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -114,8 +116,12 @@ void MX_FREERTOS_Init(void) {
   shootTaskHandle = osThreadCreate(osThread(shootTask), NULL);
 
   /* definition and creation of insTask */
-  osThreadDef(insTask, ins_task, osPriorityNormal, 0, 128);
+  osThreadDef(insTask, ins_task, osPriorityHigh, 0, 128);
   insTaskHandle = osThreadCreate(osThread(insTask), NULL);
+
+  /* definition and creation of chassisTask */
+  osThreadDef(chassisTask, chassis_task, osPriorityNormal, 0, 128);
+  chassisTaskHandle = osThreadCreate(osThread(chassisTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -162,7 +168,7 @@ __weak void shoot_task(void const * argument)
 /* USER CODE BEGIN Header_ins_task */
 /**
 * @brief Function implementing the insTask thread.
-* @param argument: Not used
+* @param argument: Not used  xTaskGetHandle
 * @retval None
 */
 /* USER CODE END Header_ins_task */
@@ -172,9 +178,27 @@ __weak void ins_task(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    INS_task();
   }
   /* USER CODE END ins_task */
+}
+
+/* USER CODE BEGIN Header_chassis_task */
+/**
+* @brief Function implementing the chassisTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_chassis_task */
+__weak void chassis_task(void const * argument)
+{
+  /* USER CODE BEGIN chassis_task */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END chassis_task */
 }
 
 /* Private application code --------------------------------------------------*/

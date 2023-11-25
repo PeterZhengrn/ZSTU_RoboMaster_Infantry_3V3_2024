@@ -1,7 +1,7 @@
 robot\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/croutine.c
 robot\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-robot\croutine.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-robot\croutine.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+robot\croutine.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stddef.h
+robot\croutine.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stdint.h
 robot\croutine.o: ../Core/Inc/FreeRTOSConfig.h
 robot\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 robot\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h

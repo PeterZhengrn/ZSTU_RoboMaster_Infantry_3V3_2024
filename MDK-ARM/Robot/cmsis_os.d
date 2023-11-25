@@ -1,9 +1,9 @@
 robot\cmsis_os.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c
-robot\cmsis_os.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+robot\cmsis_os.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\string.h
 robot\cmsis_os.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 robot\cmsis_os.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-robot\cmsis_os.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-robot\cmsis_os.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+robot\cmsis_os.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stddef.h
+robot\cmsis_os.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stdint.h
 robot\cmsis_os.o: ../Core/Inc/FreeRTOSConfig.h
 robot\cmsis_os.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 robot\cmsis_os.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h

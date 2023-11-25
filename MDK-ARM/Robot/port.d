@@ -1,7 +1,7 @@
 robot\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/port.c
 robot\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-robot\port.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-robot\port.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+robot\port.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stddef.h
+robot\port.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stdint.h
 robot\port.o: ../Core/Inc/FreeRTOSConfig.h
 robot\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 robot\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h

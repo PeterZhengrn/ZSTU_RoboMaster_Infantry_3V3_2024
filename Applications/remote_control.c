@@ -18,7 +18,6 @@
   */
 
 #include "remote_control.h"
-
 #include "main.h"
 
 

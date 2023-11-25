@@ -1,7 +1,7 @@
 robot\freertos.o: ../Core/Src/freertos.c
 robot\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-robot\freertos.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-robot\freertos.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+robot\freertos.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stddef.h
+robot\freertos.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stdint.h
 robot\freertos.o: ../Core/Inc/FreeRTOSConfig.h
 robot\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 robot\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h

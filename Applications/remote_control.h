@@ -101,4 +101,15 @@ extern void remote_control_init(void);
   */
 extern const RC_ctrl_t *get_remote_control_point(void);
 
+#define rc_deadband_limit(input, output, dealine)        \
+    {                                                    \
+        if ((input) > (dealine) || (input) < -(dealine)) \
+        {                                                \
+            (output) = (input);                          \
+        }                                                \
+        else                                             \
+        {                                                \
+            (output) = 0;                                \
+        }                                                \
+    }
 #endif

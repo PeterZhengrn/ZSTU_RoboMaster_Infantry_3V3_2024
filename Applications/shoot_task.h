@@ -5,6 +5,7 @@
 #include "CAN_receive.h"
 #include "remote_control.h"
 #include "pid.h"
+#include "default_task.h"
 //拨弹轮反转（反转-1，正转1）
 #define TRIGGER_REVERSE -1
 //射击遥控器通道
@@ -114,6 +115,7 @@ typedef struct
 {
 	shoot_mode_e shoot_mode;					//射击模式
 	shoot_mode_e shoot_last_mode;				//记录射击模式
+	const Robot_t *robot;						//机器人指针
 	const RC_ctrl_t *shoot_rc;					//遥控器指针
 	const motor_measure_t *shoot_motor_measure; //拨弹电机指针
 	const motor_measure_t *fric1_motor_measure; //摩擦轮1指针

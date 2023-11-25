@@ -1,8 +1,8 @@
 robot\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c
-robot\stream_buffer.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-robot\stream_buffer.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+robot\stream_buffer.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stdint.h
+robot\stream_buffer.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\string.h
 robot\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-robot\stream_buffer.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+robot\stream_buffer.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stddef.h
 robot\stream_buffer.o: ../Core/Inc/FreeRTOSConfig.h
 robot\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 robot\stream_buffer.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h

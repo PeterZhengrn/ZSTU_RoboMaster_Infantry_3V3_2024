@@ -1,8 +1,8 @@
 robot\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
-robot\heap_4.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+robot\heap_4.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stdlib.h
 robot\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-robot\heap_4.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-robot\heap_4.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+robot\heap_4.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stddef.h
+robot\heap_4.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stdint.h
 robot\heap_4.o: ../Core/Inc/FreeRTOSConfig.h
 robot\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 robot\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h

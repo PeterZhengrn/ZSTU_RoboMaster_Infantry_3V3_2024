@@ -1,8 +1,8 @@
 robot\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/list.c
-robot\list.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+robot\list.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stdlib.h
 robot\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-robot\list.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-robot\list.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+robot\list.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stddef.h
+robot\list.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stdint.h
 robot\list.o: ../Core/Inc/FreeRTOSConfig.h
 robot\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 robot\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h

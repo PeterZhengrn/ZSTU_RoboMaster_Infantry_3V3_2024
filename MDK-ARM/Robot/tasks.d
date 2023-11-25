@@ -1,9 +1,9 @@
 robot\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c
-robot\tasks.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
-robot\tasks.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+robot\tasks.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stdlib.h
+robot\tasks.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\string.h
 robot\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-robot\tasks.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-robot\tasks.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+robot\tasks.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stddef.h
+robot\tasks.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stdint.h
 robot\tasks.o: ../Core/Inc/FreeRTOSConfig.h
 robot\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 robot\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h

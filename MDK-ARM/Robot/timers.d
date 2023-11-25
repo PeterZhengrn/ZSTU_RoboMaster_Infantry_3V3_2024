@@ -1,8 +1,8 @@
 robot\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/timers.c
-robot\timers.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+robot\timers.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stdlib.h
 robot\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-robot\timers.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-robot\timers.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+robot\timers.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stddef.h
+robot\timers.o: E:\MDK5\keil\ARM\ARMCC\Bin\..\include\stdint.h
 robot\timers.o: ../Core/Inc/FreeRTOSConfig.h
 robot\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 robot\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h

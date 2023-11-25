@@ -19,6 +19,28 @@
         "array": "c",
         "string": "c",
         "string_view": "c",
-        "*.tcc": "c"
-    }
+        "*.tcc": "c",
+        "default_task.h": "c",
+        "remote_control.h": "c",
+        "chassis_task.h": "c",
+        "ins_task.h": "c"
+    },
+    "MicroPython.executeButton": [
+        {
+            "text": "▶",
+            "tooltip": "运行",
+            "alignment": "left",
+            "command": "extension.executeFile",
+            "priority": 3.5
+        }
+    ],
+    "MicroPython.syncButton": [
+        {
+            "text": "$(sync)",
+            "tooltip": "同步",
+            "alignment": "left",
+            "command": "extension.execute",
+            "priority": 4
+        }
+    ]
 }
