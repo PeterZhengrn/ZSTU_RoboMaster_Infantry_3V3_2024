@@ -3,7 +3,7 @@
 #include "user_lib.h"
 #include "math.h"
 /*-----------------------------------------------------------------------------------------------------------*/
-static void chassis_init(chassis_move_t *chassis_move_init);
+static void chassis_init(chassis_move_t *chassis_move_init);//https://gitee.com/Thepeter/new_rm.git
 static void chassis_set_mode(chassis_move_t *chassis_move_mode);
 static void chassis_mode_change_control_transit(chassis_move_t *chassis_move_transit);
 static void chassis_feedback_update(chassis_move_t *chassis_move_update);
@@ -15,6 +15,9 @@ static void chassis_follow_chassis_yaw_control(chassis_move_t *chassis_follow_ch
 static void chassis_independent_control(chassis_move_t *chassis_independent);
 static void chassis_raw_control(chassis_move_t *chassis_raw);
 static void chassis_zero_force_control(chassis_move_t *chassis_zero_force);
+void AGV_angle_calc( fp32 vx_set,  fp32 vy_set,  fp32 wz_set, fp32 *chassis_6020_setangle) ;
+static void chassis_vector_to_Steer_wheel_speed( fp32 vx_set,  fp32 vy_set,  fp32 wz_set, fp32 *wheel_speed);
+//static void chassis_vector_to_mecanum_wheel_speed(const fp32 vx_set, const fp32 vy_set, const fp32 wz_set, fp32 wheel_speed[4]);
 /*------------------------------------------------------------------------------------------------------------*/
 #if INCLUDE_uxTaskGetStackHighWaterMark
 uint32_t chassis_high_water;
@@ -82,27 +85,46 @@ static void chassis_init(chassis_move_t *chassis_move_init)
     //获取陀螺仪姿态角指针
     chassis_move_init->chassis_INS_angle = get_INS_angle_point();
 
-    //get chassis and steer motor measure point
-    //获取底盘和转向电机测量数据指针
-    for (uint8_t i = 0; i < 4; i++)
+    if(chassis_move_init->chassis_type == CHASSIS_STEER)
     {
-        //底盘电机测量数据指针
-        chassis_move_init->motor_chassis[i].chassis_motor_measure = get_chassis_motor_measure_point(i);
-        //转向电机测量数据指针
-        chassis_move_init->motor_steer[i].steer_motor_measure = get_steer_motor_measure_point(i);
+        //get chassis and steer motor measure point
+        //获取底盘和转向电机测量数据指针
+        for (uint8_t i = 0; i < 4; i++)
+        {
+            //底盘电机测量数据指针
+            chassis_move_init->motor_chassis[i].chassis_motor_measure = get_chassis_motor_measure_point(i);
+            //转向电机测量数据指针
+            chassis_move_init->motor_steer[i].steer_motor_measure = get_steer_motor_measure_point(i);
+               //initialize motor speed PID
+                //初始化PID 
+                for (uint8_t i = 0; i < 4; i++)
+                {
+                    PID_init(&chassis_move_init->motor_speed_pid[i], 
+                              PID_POSITION, 
+                              M3505_MOTOR_SPEED_PID_KP, 
+                              M3505_MOTOR_SPEED_PID_KI, 
+                              M3505_MOTOR_SPEED_PID_KD,
+                              M3505_MOTOR_SPEED_PID_MAX_OUT, 
+                              M3505_MOTOR_SPEED_PID_MAX_IOUT);
+                }
+                   for (uint8_t i = 0; i < 4; i++)
+                {
+                    PID_init(&chassis_move_init->motor_steer[i], 
+                              PID_POSITION, 
+                              M3505_MOTOR_SPEED_PID_KP, 
+                              M3505_MOTOR_SPEED_PID_KI, 
+                              M3505_MOTOR_SPEED_PID_KD,
+                              M3505_MOTOR_SPEED_PID_MAX_OUT, 
+                              M3505_MOTOR_SPEED_PID_MAX_IOUT);
+                }
+        }
+
+
     }
-    //initialize motor speed PID
-    //初始化PID 
-    for (uint8_t i = 0; i < 4; i++)
-    {
-        PID_init(&chassis_move_init->motor_speed_pid[i], 
-                  PID_POSITION, 
-                  M3505_MOTOR_SPEED_PID_KP, 
-                  M3505_MOTOR_SPEED_PID_KI, 
-                  M3505_MOTOR_SPEED_PID_KD,
-                  M3505_MOTOR_SPEED_PID_MAX_OUT, 
-                  M3505_MOTOR_SPEED_PID_MAX_IOUT);
-    }
+
+ 
+
+
     // initialize angle PID
     // 初始化角度PID
     PID_init(&chassis_move_init->chassis_angle_pid, 
@@ -547,15 +569,16 @@ static void chassis_zero_force_control(chassis_move_t *chassis_zero_force)
   * @param[out]     wheel_speed: 四个麦轮速度
   * @retval         none
   */
-static void chassis_vector_to_mecanum_wheel_speed(const fp32 vx_set, const fp32 vy_set, const fp32 wz_set, fp32 wheel_speed[4])
-{
-    //because the gimbal is in front of chassis, when chassis rotates, wheel 0 and wheel 1 should be slower and wheel 2 and wheel 3 should be faster
-    //旋转的时候， 由于云台靠前，所以是前面两轮 0 ，1 旋转的速度变慢， 后面两轮 2,3 旋转的速度变快
-    wheel_speed[0] = -vx_set - vy_set + (CHASSIS_WZ_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
-    wheel_speed[1] = vx_set - vy_set + (CHASSIS_WZ_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
-    wheel_speed[2] = vx_set + vy_set + (-CHASSIS_WZ_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
-    wheel_speed[3] = -vx_set + vy_set + (-CHASSIS_WZ_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
-}
+// static void chassis_vector_to_mecanum_wheel_speed(const fp32 vx_set, const fp32 vy_set, const fp32 wz_set, fp32 wheel_speed[4])
+// {
+//     //because the gimbal is in front of chassis, when chassis rotates, wheel 0 and wheel 1 should be slower and wheel 2 and wheel 3 should be faster
+//     //旋转的时候， 由于云台靠前，所以是前面两轮 0 ，1 旋转的速度变慢， 后面两轮 2,3 旋转的速度变快
+//     wheel_speed[0] = -vx_set - vy_set + (CHASSIS_WZ_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
+//     wheel_speed[1] = vx_set - vy_set + (CHASSIS_WZ_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
+//     wheel_speed[2] = vx_set + vy_set + (-CHASSIS_WZ_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
+//     wheel_speed[3] = -vx_set + vy_set + (-CHASSIS_WZ_SET_SCALE - 1.0f) * MOTOR_DISTANCE_TO_CENTER * wz_set;
+// }
+
 
 
 /**
@@ -566,12 +589,12 @@ static void chassis_vector_to_mecanum_wheel_speed(const fp32 vx_set, const fp32 
   * @attention
   */
 
-void AGV_angle_calc(const fp32 vx_set, const fp32 vy_set, const fp32 wz_set, fp32 chassis_6020_setangle[4]) 
+void AGV_angle_calc( fp32 vx_set,  fp32 vy_set,  fp32 wz_set, fp32 *chassis_6020_setangle) 
 {
-    int16_t angle_temp;
+
     fp32 Radius=1;
     fp32 wheel_angle[4]; //6020编码器目标角度
-    fp32 wheel_angle_last[4];
+
     fp64 atan_angle[4];   
 	  //6020目标角度计算
     //Radius轮子到中心的距离
@@ -588,82 +611,18 @@ void AGV_angle_calc(const fp32 vx_set, const fp32 vy_set, const fp32 wz_set, fp3
 		wheel_angle[1] =   (fp32)(atan_angle[1]*22.75);
 		wheel_angle[2] =   (fp32)(atan_angle[2]*22.75);
 		wheel_angle[3] =  (fp32)(atan_angle[3]*22.75);
-    loop_fp32_constrain(&wheel_angle[0],0,8192);//浮点型角度回环
-    loop_fp32_constrain(&wheel_angle[1],0,8192);//浮点型角度回环
-    loop_fp32_constrain(&wheel_angle[2],0,8192);//浮点型角度回环
-    loop_fp32_constrain(&wheel_angle[3],0,8192);//浮点型角度回环
+    wheel_angle[0]=loop_fp32_constrain(wheel_angle[0],0,8192);//浮点型角度回环
+    wheel_angle[1]=loop_fp32_constrain(wheel_angle[1],0,8192);//浮点型角度回环
+    wheel_angle[2]=loop_fp32_constrain(wheel_angle[2],0,8192);//浮点型角度回环
+    wheel_angle[3]=loop_fp32_constrain(wheel_angle[3],0,8192);//浮点型角度回环
+  //后续如果要加快舵轮的变化速度可以加一个函数，用于找角度电机正转还是反转哪个更快的函数，定义一个旋转方向
+  //然后在电流那乘
+  chassis_6020_setangle[0]= wheel_angle[1]  ; 
+  chassis_6020_setangle[1]= wheel_angle[1]  ;
+  chassis_6020_setangle[2] =wheel_angle[2]  ;
+  chassis_6020_setangle[3]=wheel_angle[3]  ;
     
-		switch(actChassis)
-		{
-			case CHASSIS_NORMAL:
-			{	
-				angle_temp=Chassis_Motor[4].motor_value->angle;
-				AngleLoop_int(&angle_temp,8192);//整型角度回环
-				if(fabs(Find_min_Angle(angle_temp,wheel_angle[0]))>2048)
-				{
-					for(int i=0;i<4;i++)
-						wheel_angle[i] += 4096;				
-					if(flag) //驱动电机反转 使程序执行时只能取反一次
-					{
-						drct = -drct;
-						flag=0;
-					}
-				}
-				else
-					  flag=1;
-				
-				if((speed->vx == 0 || speed->vy == 0)&&speed->vw==0)
-				{	 
-					 flag=1;
-					 drct=1;
-			  }
-        
-				AngleLoop_f(&wheel_angle[0],8192);//再次角度回环,因为加过4096
-				AngleLoop_f(&wheel_angle[1],8192);
-				AngleLoop_f(&wheel_angle[2],8192);
-				AngleLoop_f(&wheel_angle[3],8192);
-				break;
-			}
-		  case CHASSIS_FOLLOW_GIMBAL:
-		  {
-				angle_temp=Chassis_Motor[4].motor_value->angle;
-				AngleLoop_int(&angle_temp,8192);
-				if(fabs(Find_min_Angle(angle_temp,wheel_angle[0]))>2048)
-				{
-					for(int i=0;i<4;i++)
-						wheel_angle[i] += 4096;		
-                    drct=-1;										
-				}
-				else
-					drct=1;
-			
-				AngleLoop_f(&wheel_angle[0],8192);
-				AngleLoop_f(&wheel_angle[1],8192);
-				AngleLoop_f(&wheel_angle[2],8192);
-				AngleLoop_f(&wheel_angle[3],8192);
-				break;
-			}
-			case CHASSIS_GYROSCOPE:
-			{
-				//需要再加			
-				break;
-			}
-			default:break;
-	}
-    
-  if(speed->vx == 0 && speed->vy == 0 && speed->vw == 0)//摇杆回中时
-  {
-    for(int i=0;i<4;i++)//memcpy狗都不用
-     out_angle[i] = wheel_angle_last[i];
-  }
-  else
-  {
-    for(int i=0;i<4;i++)
-    {
-     out_angle[i] = wheel_angle[i];
-     wheel_angle_last[i] = wheel_angle[i];
-    }
-  }
+	
 }
 
 /**
@@ -674,28 +633,24 @@ void AGV_angle_calc(const fp32 vx_set, const fp32 vy_set, const fp32 wz_set, fp3
   * @param[out]     wheel_speed: 四个舵轮速度
   * @retval         none
   */
-static void chassis_vector_to_Steer_wheel_speed(const fp32 vx_set, const fp32 vy_set, const fp32 wz_set, fp32 wheel_speed[4])
+static void chassis_vector_to_Steer_wheel_speed( fp32 vx_set,  fp32 vy_set,  fp32 wz_set, fp32 *wheel_speed)
 {
       fp32 wheel_rpm_ratio;
     fp32 Radius=1;////2023/11/24这个参数需要变，后续调的时候要改，杭电没有定义,这个参数是舵轮到中心的距离
     wheel_rpm_ratio = 1;//2023/11/24这个参数需要变，后续调的时候要改，杭电没有定义
-    int8_t drct=1;//决定驱动电机正反转//2023/11/24这个参数需要变，后续调的时候要改，就是改正负
+   // int8_t drct=1;//决定驱动电机正反转//2023/11/24这个参数需要变，后续调的时候要改，就是改正负
 
-    wheel_speed[0] = sqrt(	pow(vy_set + wz_set * Radius * 0.707107f,2)
-                       +	pow(vx_set - wz_set * Radius * 0.707107f,2)
-                       ) * wheel_rpm_ratio;
-    wheel_speed[1] = sqrt(	pow(vy_set - wz_set * Radius * 0.707107f,2)
-                       +	pow(vx_set - wz_set * Radius * 0.707107f,2)
-                       ) * wheel_rpm_ratio;
-    wheel_speed[2] = sqrt(	pow(vy_set - wz_set * Radius * 0.707107f,2)
-                       +	pow(vx_set +wz_set * Radius * 0.707107f,2)
-                       ) * wheel_rpm_ratio;
-    wheel_speed[3] = sqrt(	pow(vy_set + wz_set * Radius * 0.707107f,2)
-                       +	pow(vx_set + wz_set * Radius * 0.707107f,2) 
-                       ) * wheel_rpm_ratio;
+ wheel_speed[0] = (sqrt(pow(vy_set + wz_set * Radius * 0.707107f, 2)
+                     + pow(vx_set - wz_set * Radius * 0.707107f, 2)) * wheel_rpm_ratio);
+wheel_speed[1] = (sqrt(pow(vy_set - wz_set * Radius * 0.707107f, 2)
+                     + pow(vx_set - wz_set * Radius * 0.707107f, 2)) * wheel_rpm_ratio);
+wheel_speed[2] = (sqrt(pow(vy_set - wz_set * Radius * 0.707107f, 2)
+                     + pow(vx_set + wz_set * Radius * 0.707107f, 2)) * wheel_rpm_ratio);
+wheel_speed[3] = (sqrt(pow(vy_set + wz_set * Radius * 0.707107f, 2)
+                     + pow(vx_set + wz_set * Radius * 0.707107f, 2)) * wheel_rpm_ratio);
+
 	  
-    for(int i=0;i<4;i++)
-       wheel_speed[i] = drct * wheel_speed[i];
+
 }
 
 /**
@@ -726,12 +681,15 @@ static void chassis_control_loop(chassis_move_t *chassis_move_control_loop)
     //舵轮角度计算 
     AGV_angle_calc(chassis_move_control_loop->vx_set,
                                             chassis_move_control_loop->vy_set,
-                                            chassis_move_control_loop->wz_set, chassis_6020_setangle);
+                                            chassis_move_control_loop->wz_set,chassis_6020_setangle );
+
+
     if (chassis_move_control_loop->chassis_mode == CHASSIS_VECTOR_RAW)
     {
         for (i = 0; i < 4; i++)
         {
             chassis_move_control_loop->motor_chassis[i].give_current = (int16_t)(wheel_speed[i]);
+            chassis_move_control_loop->motor_steer[i].give_current = (int16_t)(chassis_6020_setangle[i]);
         }
         //in raw mode, derectly return
         //raw控制直接返回
@@ -744,6 +702,7 @@ static void chassis_control_loop(chassis_move_t *chassis_move_control_loop)
     for (i = 0; i < 4; i++)
     {
         chassis_move_control_loop->motor_chassis[i].speed_set = wheel_speed[i];
+        chassis_move_control_loop->motor_steer[i].angle_set = chassis_6020_setangle[i];
         temp = fabs(chassis_move_control_loop->motor_chassis[i].speed_set);
         if (max_vector < temp)
         {
@@ -767,6 +726,10 @@ static void chassis_control_loop(chassis_move_t *chassis_move_control_loop)
         PID_calc(&chassis_move_control_loop->motor_speed_pid[i],
         chassis_move_control_loop->motor_chassis[i].speed,
         chassis_move_control_loop->motor_chassis[i].speed_set);
+
+
+
+        
     }
 
     //功率控制

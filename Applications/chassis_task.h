@@ -9,7 +9,6 @@
 #include "ins_task.h"
 #include "default_task.h"
 #define CHASSIS_TYPE CHASSIS_MECANUM //底盘类型
-
 //底盘电机到底盘中心的距离，单位m
 #define MOTOR_DISTANCE_TO_CENTER 0.2f 
 
@@ -171,6 +170,7 @@ typedef struct
   chassis_mode_e last_chassis_mode;          //last state machine.底盘上次控制状态机
   chassis_motor_t motor_chassis[4];          //chassis motor data.底盘电机数据
   steer_motor_t motor_steer[4];            //steer motor data.转向电机数据
+  pid_type_def motor_steer_pid[4];           //motor speed PID.转向电机速度pid
   pid_type_def motor_speed_pid[4];           //motor speed PID.底盘电机速度pid
   pid_type_def chassis_angle_pid;            //follow angle PID.底盘跟随角度pid
 

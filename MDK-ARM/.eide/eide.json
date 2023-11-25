@@ -93,22 +93,22 @@
         "name": "Applications",
         "files": [
           {
-            "path": "../Applications/remote_control.c"
+            "path": "../Applications/CAN_receive.c"
+          },
+          {
+            "path": "../Applications/chassis_task.c"
           },
           {
             "path": "../Applications/default_task.c"
           },
           {
-            "path": "../Applications/CAN_receive.c"
-          },
-          {
-            "path": "../Applications/shoot_task.c"
-          },
-          {
             "path": "../Applications/ins_task.c"
           },
           {
-            "path": "../Applications/chassis_task.c"
+            "path": "../Applications/remote_control.c"
+          },
+          {
+            "path": "../Applications/shoot_task.c"
           }
         ],
         "folders": []
@@ -117,10 +117,16 @@
         "name": "Bsp",
         "files": [
           {
+            "path": "../Bsp/bsp_rc.c"
+          },
+          {
             "path": "../Bsp/bsp_buzzer.c"
           },
           {
             "path": "../Bsp/bsp_can.c"
+          },
+          {
+            "path": "../Bsp/bsp_servo_pwm.c"
           },
           {
             "path": "../Bsp/bsp_delay.c"
@@ -130,12 +136,6 @@
           },
           {
             "path": "../Bsp/bsp_led.c"
-          },
-          {
-            "path": "../Bsp/bsp_rc.c"
-          },
-          {
-            "path": "../Bsp/bsp_servo_pwm.c"
           },
           {
             "path": "../Bsp/bsp_spi.c"

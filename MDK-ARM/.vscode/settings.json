@@ -42,5 +42,6 @@
             "command": "extension.execute",
             "priority": 4
         }
-    ]
+    ],
+    "C_Cpp.errorSquiggles": "disabled"
 }
